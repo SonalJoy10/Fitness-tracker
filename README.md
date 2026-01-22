@@ -7,8 +7,7 @@ This project was developed as a **group project** with a focus on clean UI, usab
 ---
 
 ## 🚀 Live Demo
-🔗 https://fitness-tracker-angular.vercel.app  
-*(Replace with your actual deployed link if different)*
+https://fitup-d2ml8zhug-sonal-joys-projects.vercel.app/home
 
 ---
 
