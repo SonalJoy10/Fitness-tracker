@@ -1,0 +1,153 @@
+<div class="workout-detail-container" *ngIf="!isLoading && workout; else loading">
+  <button mat-icon-button class="back-button" (click)="goBack()">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+
+  <div class="workout-header">
+    <img *ngIf="workout.imageUrl" [src]="workout.imageUrl" alt="{{ workout.title }}" class="header-image">
+    <div class="header-content">
+      <h1>{{ workout.title }}</h1>
+      <p class="description">{{ workout.description }}</p>
+      <div class="difficulty-badge" [ngClass]="'difficulty-' + workout.difficulty">
+        {{ workout.difficulty }}
+      </div>
+    </div>
+  </div>
+
+  <div class="quick-stats">
+    <mat-card class="stat-card">
+      <mat-card-content>
+        <div class="stat-value">{{ getTotalDuration() }}</div>
+        <div class="stat-label">Total Minutes</div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="stat-card">
+      <mat-card-content>
+        <div class="stat-value">{{ getTotalExercises() }}</div>
+        <div class="stat-label">Exercises</div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="stat-card">
+      <mat-card-content>
+        <div class="stat-value">
+          <mat-icon>location_on</mat-icon>
+          {{ workout.targetMuscles[0] }}
+        </div>
+        <div class="stat-label">Primary Target</div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div class="action-buttons">
+    <button mat-raised-button color="primary" (click)="startWorkout()">
+      <mat-icon>play_arrow</mat-icon>
+      Start Workout
+    </button>
+    <button mat-raised-button color="accent">
+      <mat-icon>bookmark_border</mat-icon>
+      Save Workout
+    </button>
+    <button mat-raised-button>
+      <mat-icon>share</mat-icon>
+      Share
+    </button>
+  </div>
+
+  <div class="target-muscles">
+    <h3>Target Muscle Groups</h3>
+    <mat-chip-set>
+      <mat-chip *ngFor="let muscle of workout.targetMuscles">{{ muscle }}</mat-chip>
+    </mat-chip-set>
+  </div>
+
+  <mat-tab-group [(selectedIndex)]="selectedTabIndex">
+    <mat-tab label="Exercises">
+      <div class="exercises-section">
+        <div *ngFor="let exercise of workout.exercises; let i = index" class="exercise-card">
+          <mat-card>
+            <mat-card-header>
+              <div class="exercise-number">{{ i + 1 }}</div>
+              <mat-card-title>{{ exercise.name }}</mat-card-title>
+            </mat-card-header>
+
+            <mat-card-content>
+              <p *ngIf="exercise.description" class="exercise-description">
+                {{ exercise.description }}
+              </p>
+
+              <div class="exercise-details">
+                <div class="detail-item">
+                  <mat-icon>repeat</mat-icon>
+                  <div>
+                    <div class="detail-label">Sets x Reps</div>
+                    <div class="detail-value">{{ exercise.sets }} x {{ exercise.reps }}</div>
+                  </div>
+                </div>
+
+                <div class="detail-item">
+                  <mat-icon>schedule</mat-icon>
+                  <div>
+                    <div class="detail-label">Duration</div>
+                    <div class="detail-value">{{ exercise.duration || 'N/A' }} min</div>
+                  </div>
+                </div>
+              </div>
+
+              <button *ngIf="exercise.videoUrl" mat-button color="primary" (click)="openVideo(exercise.videoUrl)">
+                <mat-icon>video_library</mat-icon>
+                Watch Video Tutorial
+              </button>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+    </mat-tab>
+
+    <mat-tab label="Summary">
+      <div class="summary-section">
+        <h3>Workout Summary</h3>
+
+        <div class="summary-item">
+          <strong>Difficulty Level:</strong>
+          <span [ngClass]="'difficulty-' + workout.difficulty">{{ workout.difficulty }}</span>
+        </div>
+
+        <div class="summary-item">
+          <strong>Total Duration:</strong>
+          <span>{{ getTotalDuration() }} minutes</span>
+        </div>
+
+        <div class="summary-item">
+          <strong>Exercise Count:</strong>
+          <span>{{ getTotalExercises() }} exercises</span>
+        </div>
+
+        <div class="summary-item">
+          <strong>Target Muscles:</strong>
+          <span>{{ workout.targetMuscles.join(', ') }}</span>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <h4>What to Expect:</h4>
+        <ul>
+          <li>Complete all exercises as prescribed</li>
+          <li>Rest between sets as needed</li>
+          <li>Focus on proper form over speed</li>
+          <li>Track your progress for motivation</li>
+          <li>Gradually increase weight or reps over time</li>
+        </ul>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>
+
+<ng-template #loading>
+  <div class="loading-container">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    <p>Loading workout details...</p>
+  </div>
+</ng-template>
+

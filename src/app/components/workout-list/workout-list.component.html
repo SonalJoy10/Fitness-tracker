@@ -1,0 +1,93 @@
+<div class="workout-list-container">
+  <div class="header">
+    <h1>Workout Plans</h1>
+    <p class="subtitle">Choose from our comprehensive collection of workout plans</p>
+  </div>
+
+  <div class="filters-section">
+    <mat-form-field appearance="outline" class="filter-field">
+      <mat-label>Search Workouts</mat-label>
+      <input matInput [(ngModel)]="searchQuery" (input)="onSearchChange()" placeholder="Search by name or muscle group">
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="filter-field">
+      <mat-label>Difficulty Level</mat-label>
+      <mat-select [(ngModel)]="selectedDifficulty" (selectionChange)="onDifficultyChange()">
+        <mat-option value="">All Levels</mat-option>
+        <mat-option *ngFor="let level of difficultyOptions" [value]="level">
+          {{ level }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="results-count">
+    <p *ngIf="filteredWorkouts.length > 0">
+      <strong>{{ filteredWorkouts.length }}</strong> workout(s) found
+    </p>
+    <p *ngIf="filteredWorkouts.length === 0" class="no-results">
+      No workouts found. Try adjusting your filters.
+    </p>
+  </div>
+
+  <div class="workouts-grid" *ngIf="filteredWorkouts.length > 0">
+    <mat-card *ngFor="let workout of filteredWorkouts" class="workout-card">
+      <mat-card-header>
+        <img *ngIf="workout.imageUrl" [src]="workout.imageUrl" alt="{{ workout.title }}" class="workout-image">
+        <div class="card-header-content">
+          <mat-card-title>{{ workout.title }}</mat-card-title>
+          <mat-card-subtitle class="difficulty-badge" [ngClass]="'difficulty-' + workout.difficulty">
+            {{ workout.difficulty }}
+          </mat-card-subtitle>
+        </div>
+      </mat-card-header>
+
+      <mat-card-content>
+        <p class="description">{{ workout.description }}</p>
+
+        <div class="workout-meta">
+          <div class="meta-item">
+            <mat-icon>schedule</mat-icon>
+            <span>{{ getTotalDuration(workout) }} min</span>
+          </div>
+          <div class="meta-item">
+            <mat-icon>fitness_center</mat-icon>
+            <span>{{ getExerciseCount(workout) }} exercises</span>
+          </div>
+          <div class="meta-item">
+            <mat-icon>location_on</mat-icon>
+            <span>{{ workout.targetMuscles.join(', ') }}</span>
+          </div>
+        </div>
+
+        <div class="exercises-preview">
+          <h4>Exercises:</h4>
+          <div class="exercise-list">
+            <div *ngFor="let exercise of workout.exercises | slice:0:3" class="exercise-item">
+              <mat-icon>check_circle</mat-icon>
+              <span>{{ exercise.name }} - {{ exercise.sets }}x{{ exercise.reps }}</span>
+            </div>
+            <div *ngIf="workout.exercises.length > 3" class="exercise-item more">
+              <span>+{{ workout.exercises.length - 3 }} more</span>
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+
+      <mat-card-actions>
+        <button mat-raised-button color="primary" [routerLink]="['/workouts', workout.id]">
+          <mat-icon>visibility</mat-icon>
+          View Details
+        </button>
+        <button mat-button color="accent">
+          <mat-icon>favorite_border</mat-icon>
+          Save
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+
+  <mat-progress-bar *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
+</div>
+

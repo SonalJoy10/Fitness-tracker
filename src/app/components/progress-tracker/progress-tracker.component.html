@@ -1,0 +1,187 @@
+<div class="progress-tracker-container">
+  <div class="header">
+    <h1>Progress Tracker</h1>
+    <p class="subtitle">Track your workout progress and achievements</p>
+  </div>
+
+  <mat-tab-group [(selectedIndex)]="selectedTabIndex">
+    <mat-tab label="Statistics">
+      <div class="statistics-section">
+        <div class="stats-grid">
+          <mat-card class="stat-card">
+            <mat-card-content>
+              <div class="stat-icon">
+                <mat-icon>sports_gymnastics</mat-icon>
+              </div>
+              <div class="stat-value">{{ statistics.totalWorkouts || 0 }}</div>
+              <div class="stat-label">Total Workouts</div>
+            </mat-card-content>
+          </mat-card>
+
+          <mat-card class="stat-card">
+            <mat-card-content>
+              <div class="stat-icon">
+                <mat-icon>schedule</mat-icon>
+              </div>
+              <div class="stat-value">{{ statistics.totalDuration || 0 }}</div>
+              <div class="stat-label">Total Minutes</div>
+            </mat-card-content>
+          </mat-card>
+
+          <mat-card class="stat-card">
+            <mat-card-content>
+              <div class="stat-icon">
+                <mat-icon>local_fire_department</mat-icon>
+              </div>
+              <div class="stat-value">{{ statistics.totalCalories || 0 }}</div>
+              <div class="stat-label">Calories Burned</div>
+            </mat-card-content>
+          </mat-card>
+
+          <mat-card class="stat-card">
+            <mat-card-content>
+              <div class="stat-icon">
+                <mat-icon>trending_up</mat-icon>
+              </div>
+              <div class="stat-value">{{ getCompletionRate() }}%</div>
+              <div class="stat-label">Completion Rate</div>
+            </mat-card-content>
+          </mat-card>
+        </div>
+
+        <mat-card class="info-card">
+          <mat-card-title>Quick Summary</mat-card-title>
+          <mat-card-content>
+            <div class="summary-row">
+              <span>Average Workout Duration:</span>
+              <strong>{{ statistics.averageWorkoutDuration || 0 }} minutes</strong>
+            </div>
+            <div class="summary-row">
+              <span>Last Workout:</span>
+              <strong>{{ statistics.lastWorkoutDate ? formatDate(statistics.lastWorkoutDate) : 'N/A' }}</strong>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </mat-tab>
+
+    <mat-tab label="Log Workout">
+      <div class="log-workout-section">
+        <mat-card>
+          <mat-card-title>Add New Workout Log</mat-card-title>
+          <mat-card-content>
+            <form [formGroup]="progressForm" (ngSubmit)="addProgress()">
+              <div class="form-row">
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>Workout Name</mat-label>
+                  <input matInput formControlName="workoutTitle" placeholder="e.g., Chest & Triceps">
+                </mat-form-field>
+              </div>
+
+              <div class="form-row-two">
+                <mat-form-field appearance="outline">
+                  <mat-label>Date</mat-label>
+                  <input matInput [matDatepicker]="picker" formControlName="date">
+                  <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                  <mat-label>Duration (minutes)</mat-label>
+                  <input matInput type="number" formControlName="duration" placeholder="45">
+                </mat-form-field>
+              </div>
+
+              <div class="form-row-two">
+                <mat-form-field appearance="outline">
+                  <mat-label>Calories Burned</mat-label>
+                  <input matInput type="number" formControlName="caloriesBurned" placeholder="0">
+                </mat-form-field>
+              </div>
+
+              <div class="form-row">
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>Notes</mat-label>
+                  <textarea matInput formControlName="notes" placeholder="How did you feel? Any notes?" rows="3"></textarea>
+                </mat-form-field>
+              </div>
+
+              <div class="form-actions">
+                <button mat-raised-button color="primary" type="submit">
+                  <mat-icon>add</mat-icon>
+                  Log Workout
+                </button>
+                <button mat-button type="button" (click)="progressForm.reset()">
+                  Clear
+                </button>
+              </div>
+            </form>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </mat-tab>
+
+    <mat-tab label="History">
+      <div class="history-section">
+        <h3>Workout History</h3>
+
+        <div *ngIf="isLoading">
+          <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        </div>
+
+        <div *ngIf="!isLoading && logs.length === 0" class="no-data">
+          <mat-icon>history</mat-icon>
+          <p>No workouts logged yet. Start by logging your first workout!</p>
+        </div>
+
+        <div *ngIf="!isLoading && logs.length > 0" class="logs-container">
+          <mat-card *ngFor="let log of logs" class="log-card">
+            <mat-card-header>
+              <div class="log-header-content">
+                <mat-card-title>{{ log.workoutTitle }}</mat-card-title>
+                <mat-card-subtitle>{{ formatDate(log.date) }}</mat-card-subtitle>
+              </div>
+              <button mat-icon-button color="warn" (click)="deleteProgress(log.id)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </mat-card-header>
+
+            <mat-card-content>
+              <div class="log-details">
+                <div class="detail-item">
+                  <mat-icon>schedule</mat-icon>
+                  <div>
+                    <span class="label">Duration</span>
+                    <span class="value">{{ log.duration }} minutes</span>
+                  </div>
+                </div>
+
+                <div class="detail-item" *ngIf="log.caloriesBurned">
+                  <mat-icon>local_fire_department</mat-icon>
+                  <div>
+                    <span class="label">Calories</span>
+                    <span class="value">{{ log.caloriesBurned }} kcal</span>
+                  </div>
+                </div>
+
+                <div class="detail-item" *ngIf="log.exercises.length > 0">
+                  <mat-icon>fitness_center</mat-icon>
+                  <div>
+                    <span class="label">Exercises</span>
+                    <span class="value">{{ log.exercises.length }} completed</span>
+                  </div>
+                </div>
+              </div>
+
+              <div *ngIf="log.notes" class="notes">
+                <strong>Notes:</strong>
+                <p>{{ log.notes }}</p>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>
+
