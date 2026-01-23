@@ -7,7 +7,7 @@ This project was developed as a **group project** with a focus on clean UI, usab
 ---
 
 ## 🚀 Live Demo
-Check the live website here:fitness-tracker-jvbwekoz0-sonal-joys-projects.vercel.app
+Check the live website here:https://fitness-tracker-jvbwekoz0-sonal-joys-projects.vercel.app/home
 
 ---
 
