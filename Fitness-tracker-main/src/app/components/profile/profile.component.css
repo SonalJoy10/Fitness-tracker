@@ -1,0 +1,428 @@
+.profile-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 32px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid #eee;
+}
+
+.profile-info {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+  flex: 1;
+}
+
+.profile-avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid #1976d2;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.user-info h1 {
+  margin: 0 0 4px 0;
+  font-size: 28px;
+  font-weight: 600;
+  color: #333;
+}
+
+.email {
+  margin: 0 0 12px 0;
+  color: #666;
+  font-size: 14px;
+}
+
+mat-chip-set {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.fitness-level {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.level-Beginner {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+.level-Intermediate {
+  background-color: #fff3e0;
+  color: #e65100;
+}
+
+.level-Advanced {
+  background-color: #ffebee;
+  color: #c62828;
+}
+
+.goal-chip {
+  background-color: #e3f2fd;
+  color: #1565c0;
+  font-size: 12px;
+}
+
+.quick-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.stat-card {
+  text-align: center;
+  padding: 0;
+}
+
+.stat-card mat-card-content {
+  padding: 20px;
+}
+
+.stat-label {
+  font-size: 13px;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+
+.stat-value {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1976d2;
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 4px;
+}
+
+.stat-value .unit {
+  font-size: 14px;
+  font-weight: 400;
+  color: #999;
+}
+
+.bmi-primary {
+  color: #1976d2;
+}
+
+.bmi-accent {
+  color: #ff9800;
+}
+
+.bmi-warn {
+  color: #d32f2f;
+}
+
+.stat-sublabel {
+  font-size: 12px;
+  color: #666;
+  margin-top: 4px;
+}
+
+.tab-content {
+  padding: 24px;
+}
+
+.profile-display,
+.profile-edit {
+  animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 24px;
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.info-item label {
+  font-size: 12px;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.info-item p {
+  font-size: 16px;
+  color: #333;
+  margin: 0;
+}
+
+.profile-edit form {
+  max-width: 600px;
+}
+
+.form-row {
+  margin-bottom: 16px;
+  display: flex;
+  gap: 16px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.form-row-two {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+.form-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.form-actions button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.recommendations-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+  margin: 24px 0;
+}
+
+.recommendation-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.recommendation-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.recommendation-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.recommendation-item mat-icon {
+  color: #4caf50;
+  font-size: 24px;
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.recommendation-item p {
+  margin: 0;
+  color: #333;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.fitness-tips {
+  margin: 24px 0;
+  padding: 20px;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  border-left: 4px solid #1976d2;
+}
+
+.fitness-tips h4 {
+  margin: 0 0 12px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+}
+
+.fitness-tips ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.fitness-tips li {
+  padding: 8px 0;
+  padding-left: 24px;
+  position: relative;
+  color: #666;
+  font-size: 14px;
+}
+
+.fitness-tips li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: #1976d2;
+  font-weight: bold;
+}
+
+.metrics-card {
+  margin-bottom: 24px;
+}
+
+.metrics-card mat-card-title {
+  margin-bottom: 16px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.metric-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  align-items: center;
+  border-bottom: 1px solid #eee;
+}
+
+.metric-item:last-of-type {
+  border-bottom: none;
+}
+
+.metric-label {
+  font-size: 14px;
+  color: #666;
+  font-weight: 500;
+}
+
+.metric-value {
+  font-size: 20px;
+  font-weight: 600;
+  color: #1976d2;
+}
+
+mat-progress-bar {
+  margin: 16px 0;
+}
+
+.bmi-reference {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #eee;
+}
+
+.reference-item {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+}
+
+.ref-label {
+  font-weight: 600;
+  color: #333;
+}
+
+.ref-range {
+  color: #999;
+}
+
+.note {
+  margin-top: 12px;
+  font-size: 13px;
+  color: #666;
+  font-style: italic;
+}
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 24px;
+  min-height: 400px;
+}
+
+.loading-container p {
+  margin-top: 16px;
+  color: #666;
+}
+
+@media (max-width: 900px) {
+  .profile-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .form-row-two {
+    grid-template-columns: 1fr;
+  }
+
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .recommendations-list {
+    grid-template-columns: 1fr;
+  }
+
+  .bmi-reference {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .profile-container {
+    padding: 16px;
+  }
+
+  .profile-avatar {
+    width: 80px;
+    height: 80px;
+  }
+
+  .user-info h1 {
+    font-size: 22px;
+  }
+
+  .quick-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .profile-info {
+    flex-direction: column;
+  }
+
+  .profile-header button {
+    width: 100%;
+  }
+
+  mat-chip-set {
+    flex-direction: column;
+  }
+}
